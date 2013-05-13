@@ -89,3 +89,29 @@ dirs_to_scan:
 # Replace characters windows can't display.
 # This is set by default when running on windows.
 # windows_compatible_filenames: 0
+
+# Settings for the auto-generated {dub,sub}_language_short fields.
+# These auto-generated fields can be used in file_naming_scheme (above)
+#
+# The defaults are empty, i.e.:
+#
+#dub_short_opts:
+#sub_short_opts:
+#
+# You can customize the behaivour by setting them to something like:
+#
+#dub_short_opts: &short_opts
+#  prefered:        # a prefered mapping of language to short representation.
+#    japanese: ja
+#    english:  en
+#    swedish:  sv
+#  other_len: 3     # languages not in prefered list will be truncated to this length. (No shortening if negative)
+#  min_res: 1       # All prefered languages in the input string is added to the output, then
+#                   #   others are added (if in the input string) until the total is this many. (All if negative)
+#  join: ","        # what string to join multiple languages with.
+#  more: "+"        # append this if there are more languages than shown.
+#  none: "?"        # the string will be this if there are no languages.
+#
+# #The next line, together with the &short_opts above copies the sttins for dub to sub.
+#sub_short_opts: *short_opts
+#

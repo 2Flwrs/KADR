@@ -2,7 +2,7 @@
 
 use common::sense;
 use FindBin;
-use Test::More tests => 21;
+use Test::More tests => 23;
 
 use lib "$FindBin::RealBin/../lib";
 use App::KADR::Util qw(:pathname_filter shortest strip_import_params short_lang);
@@ -72,3 +72,11 @@ is short_lang("english/other/swedish",
               min_res => 1,
               other_len=>2 ),
     "E;S*", "short_lang - all params 3";
+is short_lang("english'swedish",
+              prefered => {},
+              other_len => -1),
+    "english+", "short_lang - No shortening";
+is short_lang("english'swedish",
+              prefered => {},
+              min_res => -1),
+    "eng,swe", "short_lang - All elements";

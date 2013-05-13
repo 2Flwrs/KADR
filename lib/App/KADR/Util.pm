@@ -92,10 +92,9 @@ sub short_lang {
 
     my $num_left = $args->{min_res} - (scalar @res_pref);
     $num_left = 0 if $num_left < 0;
-
+    $num_left = [] if $args->{min_res} < 0;
 
     map { $_ = sprintf("%.*s", $args->{other_len}, $_); } @res_other;
-
 
     push @res_final, splice(@res_other, 0, $num_left);
 
@@ -113,6 +112,5 @@ sub short_lang {
 
     return $res;
 }
-
 
 1;
