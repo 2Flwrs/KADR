@@ -2,10 +2,10 @@
 
 use common::sense;
 use FindBin;
-use Test::More tests => 12;
+use Test::More tests => 19;
 
 use lib "$FindBin::RealBin/../lib";
-use App::KADR::Util qw(:pathname_filter shortest strip_import_params);
+use App::KADR::Util qw(:pathname_filter shortest strip_import_params short_lang);
 
 is pathname_filter('/?"<>|:*!\\'), '∕?"<>|:*!\\', 'unix pathname filter';
 is pathname_filter_windows('/?"<>|:*!\\'), '∕？”⟨⟩❘∶＊!⧵', 'windows pathname filter';
@@ -32,3 +32,25 @@ is shortest('a'), 'a', 'one arg okay';
 	is_deeply $args, [1, '-foo', 'a', {}],
 		'strip_import_params should ignore unknown args';
 }
+
+
+is short_lang("english"), "eng", "short_lang - simple case";
+is short_lang("english'swedish"), "eng+", "short_lang - two";
+is short_lang("english",
+              prefered=>{"english" => "E"}),
+    "E", "short_lang - pref, simple case";
+is short_lang("english'swedish",
+              prefered=>{"english" => "E"}),
+    "E+", "short_lang - pref, extra";
+is short_lang("english'swedish",
+              prefered=>{"english" => "E", "swedish" => "S"}),
+    "E,S", "short_lang - pref, two";
+is short_lang("english'other'swedish",
+              prefered=>{"english" => "E", "swedish" => "S"}),
+    "E,S+", "short_lang - pref, two, extra";
+is short_lang("english/other/swedish",
+              prefered=>{"english" => "E", "swedish" => "S"},
+              split => "/",
+              join => "",
+              more => "*"),
+    "ES*", "short_lang - all params";
