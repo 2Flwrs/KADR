@@ -105,3 +105,13 @@ has 'windows_compatible_filenames',
 	default => 0,
 	documentation => 'Default: false. Set to true to make Windows not shit bricks.',
 	isa => 'Bool';
+
+has 'dub_short_opts',
+    default => sub { +{ prefered => { japanese => 'ja',
+                                      english => 'en' } } },
+    isa => 'HashRef';
+
+has 'sub_short_opts',
+    default => sub { +{ prefered => { japanese => 'ja',
+                                      english => 'en' } } },
+    isa => 'HashRef';

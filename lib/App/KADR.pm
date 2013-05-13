@@ -366,6 +366,12 @@ sub process_file {
         $fileinfo->{anime}->{start_year} =
             ( $fileinfo->{anime}->{year} =~ s/^([[:digit:]]+).*/$1/r );
 
+        $fileinfo->{dub_language_short} =
+            short_lang($fileinfo->{dub_language}, %{ $conf->{dub_short_opts} } );
+
+        $fileinfo->{sub_language_short} =
+            short_lang($fileinfo->{sub_language}, %{ $conf->{sub_short_opts} } );
+
 	my $newname = File->new(
 		$self->path_tx->render('path.tx', $fileinfo) =~ s{[\r\n]}{}gr
 	);
