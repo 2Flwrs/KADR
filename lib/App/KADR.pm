@@ -327,7 +327,11 @@ sub process_file {
 	$fileinfo->{episode_watched} = $fileinfo->{episode_number}->in_ignore_max($mylistanimeinfo->{watched_eps});
 
 	my $episode_count = $anime->{episode_count} || $anime->{highest_episode_number};
-	$fileinfo->{episode_number_padded} = $fileinfo->{episode_number}->padded({'' => length $episode_count});
+	#$fileinfo->{episode_number_padded} = $fileinfo->{episode_number}->padded({'' => length $episode_count});
+        my $padsize = length $episode_count;
+        $padsize = 2 if $padsize<2;
+	$fileinfo->{episode_number_padded} = $fileinfo->{episode_number}->
+            padded({'' => $padsize, 'S' => 2, 'C' => 2, 'T' => 2, 'P' => 2, 'O' => 2});
 
 	$fileinfo->{video_codec} =~ s/H264\/AVC/H.264/g;
 	$fileinfo->{audio_codec} =~ s/Vorbis \(Ogg Vorbis\)/Vorbis/g;
