@@ -11,7 +11,7 @@ use App::KADR::Config;
 use App::KADR::DBI;
 use aliased 'App::KADR::Path::File';
 use aliased 'App::KADR::Term::StatusLine::Fractional';
-use App::KADR::Util qw(:pathname_filter shortest);
+use App::KADR::Util qw(:pathname_filter shortest short_lang);
 use Digest::ED2K;
 use Encode;
 use File::Copy;
@@ -531,7 +531,9 @@ sub _build_path_tx {
 	my $conf = $self->conf;
 
 	Text::Xslate->new(
-		function => { html_escape => $self->pathname_filter },
+		function => {
+			html_escape => $self->pathname_filter,
+			short_lang => \&short_lang },
 		path     => { 'path.tx' => $conf->file_naming_scheme },
 	);
 }
