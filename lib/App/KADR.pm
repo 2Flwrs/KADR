@@ -360,6 +360,12 @@ sub process_file {
 
 	$fileinfo->{file_version} = $a->file_version($fileinfo);
 
+        ($fileinfo->{video_resolution_x}, $fileinfo->{video_resolution_y}) =
+            split(/x/, $fileinfo->{video_resolution});
+
+        $fileinfo->{anime}->{start_year} =
+            ( $fileinfo->{anime}->{year} =~ s/^([[:digit:]]+).*/$1/r );
+
 	my $newname = File->new(
 		$self->path_tx->render('path.tx', $fileinfo) =~ s{[\r\n]}{}gr
 	);
