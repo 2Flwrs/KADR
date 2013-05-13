@@ -69,6 +69,8 @@ sub short_lang {
         join => { default => "," },
         more => { default => "+" },
         none => { default => "?" },
+        min_res => { default => 1 },
+        other_len => { default => 3 },
     };
 
     my $args = check( $tmpl, {@_}, $Params::Check::VERBOSE) or die;
@@ -86,16 +88,23 @@ sub short_lang {
         }
     }
 
+    my @res_final = @res_pref;
+
+    my $num_left = $args->{min_res} - (scalar @res_pref);
+    $num_left = 0 if $num_left < 0;
+
+
+    map { $_ = sprintf("%.*s", $args->{other_len}, $_); } @res_other;
+
+
+    push @res_final, splice(@res_other, 0, $num_left);
+
     my $res;
-    if (scalar @res_pref == 0) {
-        if (scalar @res_other == 0) {
-            $res = $args->{none};
-        } else {
-            my $main = shift(@res_other);
-            $res = sprintf("%.3s", $main);
-        }
+
+    if (scalar @res_final > 0) {
+        $res = join $args->{join}, @res_final;
     } else {
-        $res = join $args->{join}, @res_pref;
+        $res = $args->{none};
     }
 
     if (scalar @res_other > 0) {
