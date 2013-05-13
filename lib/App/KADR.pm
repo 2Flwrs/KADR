@@ -335,17 +335,19 @@ sub process_file {
 	# Check if this is the only episode going into the folder.
 	# TODO: Since unwatched/watched dirs are no longer the only possible
 	# states, this may be wrong depending on configuration.
-	$fileinfo->{only_episode_in_folder}
-		# Sole episode on HDD.
-		= $fileinfo->{episode_number} eq $mylistanimeinfo->{eps_with_state_on_hdd}
-		|| (
-			$fileinfo->{episode_watched}
-			# Sole watched episode.
-			? $fileinfo->{episode_number} eq $mylistanimeinfo->{watched_eps}
-			# Sole unwatched episode.
-			# FIXME: Calls count on undefined mylist info in --test mode with no eps in anime in mylist.
-			: $fileinfo->{episode_number}->count == $mylistanimeinfo->{eps_with_state_on_hdd}->count - $mylistanimeinfo->{watched_eps}->count
-		);
+	#$fileinfo->{only_episode_in_folder}
+	#	# Sole episode on HDD.
+	#	= $fileinfo->{episode_number} eq $mylistanimeinfo->{eps_with_state_on_hdd}
+	#	|| (
+	#		$fileinfo->{episode_watched}
+	#		# Sole watched episode.
+	#		? $fileinfo->{episode_number} eq $mylistanimeinfo->{watched_eps}
+	#		# Sole unwatched episode.
+	#		# FIXME: Calls count on undefined mylist info in --test mode with no eps in anime in mylist.
+	#		: $fileinfo->{episode_number}->count == $mylistanimeinfo->{eps_with_state_on_hdd}->count - $mylistanimeinfo->{watched_eps}->count
+	#	);
+
+        $fileinfo->{only_episode_in_folder} = 0;
 
 	$fileinfo->{is_primary_episode} =
 		# This is the only episode.
