@@ -107,11 +107,9 @@ has 'windows_compatible_filenames',
 	isa => 'Bool';
 
 has 'dub_short_opts',
-    default => sub { +{ prefered => { japanese => 'ja',
-                                      english => 'en' } } },
+    default => sub { +{ } } },
     isa => 'HashRef';
 
 has 'sub_short_opts',
-    default => sub { +{ prefered => { japanese => 'ja',
-                                      english => 'en' } } },
+    default => sub { +{ } } },
     isa => 'HashRef';
