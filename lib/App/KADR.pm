@@ -521,7 +521,7 @@ sub _build_files {
 	my $self = shift;
 	my $conf = $self->conf;
 
-	my @files = _find_files(@{ $conf->dirs_to_scan });
+	my @files = $self->_find_files(@{ $conf->dirs_to_scan });
 
 	print 'Sorting... ';
 	@files = $conf->collator->sort(@files);
@@ -549,6 +549,8 @@ sub _build_path_tx {
 }
 
 sub _find_files {
+	my $self = shift;
+        my $conf = $self->conf;
 	my @dirs = @_;
 	my @files;
 
@@ -561,8 +563,8 @@ sub _find_files {
 		}
 
 		for ($dir->children) {
-			if   ($_->is_dir) { push @dirs,  $_ }
-			else              { push @files, $_ if _valid_file() }
+			if   ($_->is_dir) { push @dirs,  $_ if !($conf->{ignore_dir_symlinks} && $_->is_link) }
+			else              { push @files, $_ if !($conf->{ignore_file_symlinks} && $_->is_link) && _valid_file() }
 		}
 	}
 

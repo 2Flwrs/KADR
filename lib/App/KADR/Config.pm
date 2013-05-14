@@ -113,3 +113,11 @@ has 'dub_short_opts',
 has 'sub_short_opts',
     default => sub { +{ } },
     isa => 'HashRef';
+
+has 'ignore_file_symlinks',
+    default => 1,
+    isa => 'Bool';
+
+has 'ignore_dir_symlinks',
+    default => 1,
+    isa => 'Bool';

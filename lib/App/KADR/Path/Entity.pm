@@ -26,6 +26,7 @@ sub abs_cmp {
 sub exists         { -e $_[0] }
 sub is_dir_exists  { -d $_[0] }
 sub is_file_exists { -f $_[0] }
+sub is_link        { -l $_[0]->stringify }
 
 sub size { $_[0]->stat->size }
 
