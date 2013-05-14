@@ -7,7 +7,7 @@ use Params::Util qw(_STRING);
 use Params::Check qw[check];
 use Sub::Exporter -setup => {
 	exports => [qw(pathname_filter pathname_filter_windows shortest
-		strip_import_params _STRINGLIKE0 short_lang)],
+		strip_import_params _STRINGLIKE0 short_lang first_nonempty)],
 	groups => {
 		pathname_filter => [qw(pathname_filter pathname_filter_windows)],
 	}
@@ -111,6 +111,14 @@ sub short_lang {
     }
 
     return $res;
+}
+
+sub first_nonempty {
+    my $res;
+    while ( defined($res = shift) ) {
+        last if ($res ne "");
+    }
+    return $res // "";
 }
 
 1;

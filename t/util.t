@@ -2,10 +2,10 @@
 
 use common::sense;
 use FindBin;
-use Test::More tests => 23;
+use Test::More tests => 26;
 
 use lib "$FindBin::RealBin/../lib";
-use App::KADR::Util qw(:pathname_filter shortest strip_import_params short_lang);
+use App::KADR::Util qw(:pathname_filter shortest strip_import_params short_lang first_nonempty);
 
 is pathname_filter('/?"<>|:*!\\'), '∕?"<>|:*!\\', 'unix pathname filter';
 is pathname_filter_windows('/?"<>|:*!\\'), '∕？”⟨⟩❘∶＊!⧵', 'windows pathname filter';
@@ -80,3 +80,7 @@ is short_lang("english'swedish",
               prefered => {},
               min_res => -1),
     "eng,swe", "short_lang - All elements";
+
+is first_nonempty("ASDF", "QWER"), "ASDF", "first_nonempty - 1";
+is first_nonempty("", "QWER"), "QWER", "first_nonempty - 2";
+is first_nonempty("", ""), "", "first_nonempty - 3";
