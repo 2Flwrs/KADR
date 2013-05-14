@@ -590,7 +590,7 @@ sub _find_files {
 		}
 
 		for ($dir->children) {
-			if   ($_->is_dir) { push @dirs,  $_ if !($conf->{ignore_dir_symlinks} && $_->is_link) }
+			if   ($_->is_dir) { push @dirs,  $_ if !($conf->{ignore_dir_symlinks} && $_->is_link) && (!$conf->{ignore_dot_dir} || _non_dot_dir()) }
 			else              { push @files, $_ if !($conf->{ignore_file_symlinks} && $_->is_link) && _valid_file() }
 		}
 	}
@@ -609,5 +609,10 @@ sub _valid_file {
 	return if substr($_->basename, 0, 1) eq '.';
 	return if $_->basename eq 'Thumbs.db';
 	return if $_->basename eq 'desktop.ini';
+	1;
+}
+
+sub _non_dot_dir {
+	return if substr($_->basename, 0, 1) eq '.';
 	1;
 }

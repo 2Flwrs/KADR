@@ -114,6 +114,10 @@ has 'sub_short_opts',
     default => sub { +{ } },
     isa => 'HashRef';
 
+has 'ignore_dot_dir',
+    default => 1,
+    isa => 'Bool';
+
 has 'ignore_file_symlinks',
     default => 1,
     isa => 'Bool';
