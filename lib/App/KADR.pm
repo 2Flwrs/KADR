@@ -387,6 +387,8 @@ sub process_file {
 		&& ($fileinfo->{episode_english_name} eq $anime->{type} || $fileinfo->{episode_english_name} eq 'Complete Movie');
 
 	$fileinfo->{file_version} = $a->file_version($fileinfo);
+	$fileinfo->{file_censored} = $a->file_censored($fileinfo);
+	$fileinfo->{file_crc_state} = $a->file_crc_state($fileinfo);
 
         ($fileinfo->{video_resolution_x}, $fileinfo->{video_resolution_y}) =
             split(/x/, $fileinfo->{video_resolution});

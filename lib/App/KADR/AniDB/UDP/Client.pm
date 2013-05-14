@@ -169,6 +169,30 @@ sub file_version {
 	}
 }
 
+sub file_censored {
+	my($self, $file) = @_;
+
+	if($file->{status} & FILE_STATUS_CEN) {
+		return 1;
+	} elsif($file->{status} & FILE_STATUS_UNC) {
+		return -1;
+	} else {
+		return 0;
+	}
+}
+
+sub file_crc_state {
+	my($self, $file) = @_;
+
+	if($file->{status} & FILE_STATUS_CRCOK) {
+		return 1;
+	} elsif($file->{status} & FILE_STATUS_CRCERR) {
+		return -1;
+	} else {
+		return 0;
+	}
+}
+
 sub has_session {
 	$_[0]->_session_key
 	&& !$_[0]->is_banned
