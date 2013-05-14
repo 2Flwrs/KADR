@@ -67,6 +67,11 @@ sub relative {
 		: $self->{_relative}{$self->_spec->curdir} //= $self->SUPER::relative;
 }
 
+sub SUPER_relative {
+    my $self = shift;
+    $self->SUPER::relative(@_);
+}
+
 sub stringify {
 	$_[0]{stringify}
 		//= defined $_[0]{dir}

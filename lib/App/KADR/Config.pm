@@ -121,3 +121,15 @@ has 'ignore_file_symlinks',
 has 'ignore_dir_symlinks',
     default => 1,
     isa => 'Bool';
+
+has 'leave_symlink',
+    default => 0,
+    isa => 'Bool';
+
+has 'leave_symlink_copy',
+    default => 0,
+    isa => 'Bool';
+
+has 'leave_symlink_relative',
+    default => 0,
+    isa => 'Bool';

@@ -224,6 +224,30 @@ sub manage {
 	}
 }
 
+sub _actual_move {
+    my ($self, $old, $new, $sl) = @_;
+    my $conf = $self->conf;
+
+    return 1 if ($old == $new);
+
+    if ($conf->leave_symlink) {
+        my $olddir = $old->dir;
+        my $newpath = $conf->leave_symlink_relative
+            ? $new->SUPER_relative($olddir->stringify)
+            : $new;
+        if ($conf->leave_symlink_copy) {
+            if( !copy($old,$new) ) { return 0; }
+            if( !symlink($newpath, $old . ".KADR.CREATING.LINK") ) { return 0; }
+            return move($old . ".KADR.CREATING.LINK", $old);
+        } else {
+            if( !move($old,$new) ) { return 0; }
+            return symlink($newpath, $old);
+        }
+    } else {
+        return move($old, $new);
+    }
+}
+
 sub move_file {
 	my ($self, $file_sl, $old, $ed2k, $new) = @_;
 
@@ -248,7 +272,7 @@ sub move_file {
 	}
 
 	$sl->update('Moving to ' . $display_new);
-	if (move($old, $new)) {
+	if ($self->_actual_move($old, $new, $sl)) {
 		$self->db->update('known_files', {filename => $new->basename}, {ed2k => $ed2k, size => -s $new});
 		$sl->finalize('Moved to ' . $display_new);
 	}
